@@ -1,0 +1,337 @@
+//Aluno:David Marques dos reis lima
+
+
+#include<stdio.h>
+#include<stdlib.h>>
+
+
+struct No {
+    int valor;
+    No *prox;
+    No *penultimo;
+};
+
+struct Lista {
+    No *cabeca, *cauda, *penultimo;
+
+    int n;
+
+    Lista() {
+        cabeca = cauda = NULL;
+        n = 0;
+    }
+
+    bool vazia() { // O(1)
+        return (cabeca == NULL);
+    }
+
+    void inserirInicio(int v) { // O(1)
+        No *novo = new No();
+        novo->valor = v;
+        if (vazia()) {
+            novo->prox = NULL;
+            cabeca = novo;
+            cauda = novo;
+        } else {
+            novo->prox = cabeca;
+            cabeca = novo;
+        }
+        n++;
+    }
+
+    void inserirFinal(int v) { // O(1)
+        No *novo = new No();
+        novo->valor = v;
+        if (vazia()) {
+            novo->prox = NULL;
+            cabeca = novo;
+            cauda = novo;
+        } else {
+            novo->prox = NULL;
+            cauda->prox = novo;
+            cauda = novo;
+        }
+        n++;
+    }
+
+    void imprimir() { // O(n)
+        /*for (No *aux = cabeca; aux != NULL; aux = aux->prox) */
+        No *aux = cabeca;
+        while (aux != NULL) {
+            printf("%d->", aux->valor);
+            aux = aux->prox;
+        }
+        printf("\n");
+    }
+
+
+
+    int tamanho() { // O(1)
+        return n;
+    }
+
+    void removerInicio() { // O(1)
+        if (!vazia()) {
+            if (tamanho() == 1) {
+                No *aux = cabeca;
+                cabeca = NULL;
+                cauda = NULL;
+                delete(aux);
+            } else {
+                No *aux = cabeca;
+                cabeca = cabeca->prox;
+                delete(aux);
+            }
+            n--;
+        }
+    }
+
+    void removerFinal() { // O(n)
+        if (!vazia()) {
+            if (tamanho() == 1) {
+                No *aux = cabeca;
+                cabeca = NULL;
+                cauda = NULL;
+                delete(aux);
+            } else {
+                No *penultimo = cabeca;
+                while (penultimo->prox != cauda) {
+                    penultimo = penultimo->prox;
+                }
+                delete(cauda);
+                cauda = penultimo;
+                cauda->prox = NULL;
+            }
+            n--;
+        }
+    }
+
+    void questao1()
+    {
+        No *aux=cabeca;
+        int N;
+
+        printf("\nDigite quantos numeros vao ser removidos do final:");
+        scanf("%d",&N);
+
+    if(cabeca->prox==NULL){
+
+           printf("\nso tem um elmento na lista\n");
+        }
+            else{
+
+
+
+        for(int i=0; i<N; i++)
+        {
+
+            removerFinal();
+        }
+
+      }
+}
+
+    void questao2()
+    {
+
+        No *aux=cabeca;
+        No *segundo=cabeca->prox;
+        int cont=0;
+
+        if(cabeca->prox==NULL)
+        {
+            printf("\nessa lista so tem 1 elemento\n");
+
+        }
+        else
+        {
+
+            printf("\nsem o segundo numero:");
+            while(aux!=NULL)
+            {
+
+                if(aux==cabeca->prox)
+                {
+
+                    segundo=aux->prox;
+                    cabeca->prox=segundo;
+                    delete(aux);
+
+                    aux=segundo->prox;
+
+                }
+
+                if(tamanho()==3){
+                    cabeca->prox=cauda;
+                    cauda->prox=NULL;
+                    aux=cabeca->prox;
+
+                 }
+
+
+
+                aux=aux->prox;
+
+                cont++;
+
+            }
+        }
+    }
+
+    int questao3()
+    {
+        int t = 0;
+        No *aux = cabeca;
+        while (aux != NULL)
+        {
+            t++;
+            aux = aux->prox;
+        }
+        return printf("\nTamanho atual da lista:%d\n",t);
+    }
+
+
+    void questao4()
+    {
+        int ultnum;
+        No *aux = cabeca;
+
+        printf("\ndigite aqui o numero escolhido:");
+        scanf("%d",&ultnum);
+
+        while(aux!=NULL)
+        {
+            if(aux->valor==ultnum)
+            {
+
+                aux->prox=NULL;
+
+            }
+
+            aux=aux->prox;
+        }
+    }
+
+    void questao5()
+    {
+        No *novo = new No();
+        No *aux=cabeca;
+        No *penultimo;
+        int v;
+
+
+        if(tamanho()==1)
+        {
+            printf("\na lista so tem um elemento");
+
+        }
+        else
+        {
+
+            printf("\ndigite aqui o numero que vai ser inserido:");
+            scanf("%d",&v);
+            novo->valor=v;
+
+            while(aux->prox!=NULL)
+            {
+
+                if(aux->prox==cauda)
+                {
+
+                    penultimo=aux;
+                    penultimo->prox=novo;
+                    novo->prox=cauda;
+
+                }
+
+                aux=aux->prox;
+
+            }
+
+        }
+
+    }
+
+
+};
+
+
+int main()
+{
+    int questao;
+    Lista l;
+    l.inserirInicio(5);
+    l.inserirInicio(7);
+    l.inserirInicio(10);
+    l.inserirFinal(8);
+    l.inserirFinal(2);
+    l.inserirFinal(3);
+    //l.questao1();
+    // l.questao2();
+    // l.questao3();
+    //l.questao4();
+    //l.questao5();
+
+    l.imprimir();
+
+
+
+    do
+    {
+        printf("\n(digite 0 para sair)");
+        printf("\nDigite o numero da questao para ver a resposta:");
+        scanf("%d",&questao);
+       // system("cls");
+
+        if(questao==1)
+        {
+
+            l.questao1();
+            l.imprimir();
+
+        }
+
+
+        if(questao==2)
+        {
+
+            l.questao2();
+            l.imprimir();
+
+        }
+
+
+        if(questao==3)
+        {
+
+            l.questao3();
+            l.imprimir();
+
+        }
+
+
+
+        if(questao==4)
+        {
+
+            l.questao4();
+            l.imprimir();
+
+        }
+
+
+        if(questao==5)
+        {
+
+            l.questao5();
+            l.imprimir();
+
+        }
+
+
+    }
+    while(questao!=0);
+
+
+    return 0;
+}
